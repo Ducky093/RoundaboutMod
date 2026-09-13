@@ -91,7 +91,7 @@ public class PowersTattooYou extends NewDashPreset {
 
     public StandEntity getStandForHUDIfFake(){
         if (displayStand == null){
-            displayStand = null
+            displayStand = null;
         }
 
         return displayStand;
@@ -124,7 +124,7 @@ public class PowersTattooYou extends NewDashPreset {
                 summonCloneClient();
             }
             case SKILL_1_CROUCH-> {
-              commandCloneClient
+              commandCloneClient();
             )
             case SKILL_2_NORMAL, SKILL_2_CROUCH -> {
                 swapWithCloneClient();
@@ -138,149 +138,8 @@ public class PowersTattooYou extends NewDashPreset {
         }
     }
 
-    public void switchModeClient(){
-        if (getCreative() || !ClientNetworking.getAppropriateConfig().survivorSettings.canonSurvivorHasNoRageCupid) {
-            SurvivorTarget = null;
-            EntityTargetOne = null;
-            ((StandUser) this.getSelf()).roundabout$tryPower(PowerIndex.POWER_4, true);
-            tryPowerPacket(PowerIndex.POWER_4);
-        }
-    }
 
-    public void throwBottleClient(){
-        if (!this.onCooldown(PowerIndex.SKILL_1)) {
-            if (canUseWaterBottleThrow()) {
-                ((StandUser) this.getSelf()).roundabout$tryPower(PowerIndex.POWER_1, true);
-                tryPowerPacket(PowerIndex.POWER_1);
-            }
-        }
-    }
-
-    public void throwBottleActually(ItemStack stack){
-
-        playSoundIfPossible(self.level(),
-                null,
-                this.self.getX(),
-                this.self.getY(),
-                this.self.getZ(),
-                SoundEvents.SPLASH_POTION_THROW,
-                SoundSource.PLAYERS,
-                0.5F,
-                0.4F / (this.self.getRandom().nextFloat() * 0.4F + 0.8F)
-        );
-        ThrownWaterBottleEntity $$4 = new ThrownWaterBottleEntity(this.self.level(), this.self);
-        $$4.setItem(stack);
-        $$4.shootFromRotation(this.self, this.self.getXRot(), this.self.getYRot(), -0.1F, 1.5F, 0.2F);
-        this.self.level().addFreshEntity($$4);
-    }
-
-    public boolean throwWaterBottle(){
-        int cooldown = 5;
-        this.setCooldown(PowerIndex.SKILL_1, cooldown);
-        if (!this.self.level().isClientSide() && this.self instanceof Player PL){
-            ItemStack stack = this.getSelf().getMainHandItem();
-            if ((!stack.isEmpty() && stack.getItem() instanceof PotionItem PI && PotionUtils.getPotion(stack) == Potions.WATER)
-            && !(stack.getItem() instanceof SplashPotionItem )) {
-                throwBottleActually(stack.copy());
-                if (!PL.getAbilities().instabuild) {
-                    stack.shrink(1);
-                }
-                return true;
-            }
-            ItemStack stack2 = this.getSelf().getOffhandItem();
-            if ((!stack2.isEmpty() && stack2.getItem() instanceof PotionItem PI && PotionUtils.getPotion(stack2) == Potions.WATER)
-                    && !(stack2.getItem() instanceof SplashPotionItem )) {
-                throwBottleActually(stack2.copy());
-                if (!PL.getAbilities().instabuild) {
-                    stack2.shrink(1);
-                }
-                return true;
-            }
-        }
-        return true;
-    }
-
-    @Override
-    public boolean tryTripleIntPower(int move, boolean forced, int chargeTime, int move2, int move3){
-        switch (move)
-        {
-            case PowerIndex.POWER_4_BONUS -> {
-                initializeTargets(chargeTime,move2, move3);
-            }
-        }
-        return tryPower(move, forced);
-    }
-
-    public void initializeTargets(int x, int y, int z){
-
-
-        Entity targ = this.self.level().getEntity(x);
-        if (targ instanceof SurvivorEntity SE){
-            SurvivorTarget = SE;
-        }
-        EntityTargetOne = this.self.level().getEntity(y);
-        EntityTargetTwo = this.self.level().getEntity(z);
-    }
-
-
-    @Override
-    public boolean highlightsEntity(Entity ent,Player player){
-        if (ent != null) {
-            if (angerSelectionMode()) {
-                if (
-                        (SurvivorTarget != null  && ent.is(SurvivorTarget)) ||
-                                (EntityTargetOne != null && ent.is(EntityTargetOne))
-                ) {
-                    return true;
-                }
-
-                Entity highlights = getHighlighter();
-                if (highlights != null && highlights.is(ent)){
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-    @Override
-    public int highlightsEntityColor(Entity ent, Player player){
-        if (
-                (SurvivorTarget != null && ent != null && ent.is(SurvivorTarget)) ||
-                        (EntityTargetOne != null && ent != null && ent.is(EntityTargetOne))
-        ){
-            return 4971295;
-        }
-        return 11283968;
-    }
-
-    @Override
-    public boolean returnFakeStandForHud(){
-        return true;
-    }
-    public SurvivorEntity SurvivorTarget = null;
-    public Entity EntityTargetOne = null;
-    public Entity EntityTargetTwo = null;
-    public boolean selectTarget(){
-        setRageCupidCooldown();
-        unloadTargets();
-        SurvivorEntity surv = SurvivorTarget;
-        if (surv != null && EntityTargetOne instanceof LivingEntity LE && EntityTargetTwo instanceof LivingEntity LE2){
-            surv.matchEntities(LE,LE2);
-        }
-        return true;
-    }
-
-    public boolean canUseStillStandingRecharge(byte bt){
-        if (bt == PowerIndex.SKILL_2)
-            return false;
-        return super.canUseStillStandingRecharge(bt);
-    }
-
-  
-
-    public int lastPlacementTime = -1;
-
- 
+   
   
     @Override
     public int getDisplayPowerInventoryScale(){
@@ -348,9 +207,6 @@ public class PowersTattooYou extends NewDashPreset {
         if (keyIsDown) {
             if (!holdAttack) {
                 holdAttack = true;
-                if (angerSelectionMode()) {
-                    selectTargetClient();
-                }
             }
         } else if (holdAttack){
             holdAttack = false;
