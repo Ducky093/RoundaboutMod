@@ -84,10 +84,6 @@ public class PowersTattooYou extends NewDashPreset {
     }
 
 
-    @Override
-    public void onPowerSwitch(){
-      
-    }
 
     public StandEntity getStandForHUDIfFake(){
         if (displayStand == null){
