@@ -101,13 +101,6 @@ public class PowersTattooYou extends NewDashPreset {
         return $$1;
     }
 
-    @Override
-
-
-
-
-
-
 
 
 
@@ -120,7 +113,7 @@ public class PowersTattooYou extends NewDashPreset {
                 summonCloneClient();
             }
             case SKILL_1_CROUCH-> {
-              commandCloneClient();
+              callAllClonesBackClient();
             )
             case SKILL_2_NORMAL, SKILL_2_CROUCH -> {
                 swapWithCloneClient();
@@ -129,13 +122,53 @@ public class PowersTattooYou extends NewDashPreset {
                 dash();
             }
             case SKILL_4_NORMAL, SKILL_4_CROUCH -> {
-                callAllClonesBackClient();
+                commandCloneClient();
             }
         }
     }
 
+public boolean summonCloneClient() {
+            ServerLevel level,
+            Player original,
+            Vec3 spawnPos,
+            byte worldId
+    ) {
+        Entity copyEntity = ModEntities.TATTOO_YOU_CLONE.create(this.getSelf().level());
 
-   
+        if (!(copyEntity instanceof TattooYouCloneEntity copy)) {
+            return false;
+        }
+
+        // -------------------------------------------------
+        // UNIVERSAL STUFF YOU ACTUALLY WANT TO PRESERVE
+        // -------------------------------------------------
+
+        // Name
+        if (original.hasCustomName()) {
+            copy.setCustomName(original.getCustomName());
+            copy.setCustomNameVisible(original.isCustomNameVisible());
+        }
+
+
+        if (original.getUUID().equals(self.getUUID())){
+            copy.safeCopy = true;
+        }
+        copy.setPlayer(original);
+        ((IMob)copy).roundabout$setFate(((IPlayerEntity)original).roundabout$getFate());
+        copy.setItemSlot(EquipmentSlot.HEAD, original.getItemBySlot(EquipmentSlot.HEAD).copy());
+        copy.setItemSlot(EquipmentSlot.CHEST, original.getItemBySlot(EquipmentSlot.CHEST).copy());
+        copy.setItemSlot(EquipmentSlot.LEGS, original.getItemBySlot(EquipmentSlot.LEGS).copy());
+        copy.setItemSlot(EquipmentSlot.FEET, original.getItemBySlot(EquipmentSlot.FEET).copy());
+        copy.setItemSlot(EquipmentSlot.MAINHAND, original.getMainHandItem().copy());
+        copy.setItemSlot(EquipmentSlot.OFFHAND, original.getOffhandItem().copy());
+        for (EquipmentSlot slot : EquipmentSlot.values()) {
+            copy.setDropChance(slot, 0.0F);
+        }
+
+
+            
+        }
+    }
   
     @Override
     public int getDisplayPowerInventoryScale(){
