@@ -167,6 +167,12 @@ public boolean summonCloneClient() {
             
         }
     }
+    public boolean commandCloneClient() {
+    
+     }
+    public boolean swapWithCloneClient() {
+        
+    }
   
     @Override
     public int getDisplayPowerInventoryScale(){
