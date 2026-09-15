@@ -261,6 +261,13 @@ public class FabricEntities {
                     EntityType.Builder.of(D4CCloneEntity::new, MobCategory.MISC).
                             sized(0.6f, 1.8f).clientTrackingRange(10).build(Roundabout.MOD_ID+":d4c_clone")
             );
+            public static final EntityType<D4CCloneEntity> TATTOO_YOU_CLONE =
+            Registry.register(
+                    BuiltInRegistries.ENTITY_TYPE,
+                    new ResourceLocation(Roundabout.MOD_ID, "tattoo_you_clone"),
+                    EntityType.Builder.of(TattooYouCloneEntity::new, MobCategory.MISC).
+                            sized(0.6f, 1.8f).clientTrackingRange(10).build(Roundabout.MOD_ID+":tattoo_you_clone")
+            );
     public static final EntityType<KingCrimsonProjectionEntity> KING_CRIMSON_PROJECTION =
             Registry.register(
                     BuiltInRegistries.ENTITY_TYPE,
