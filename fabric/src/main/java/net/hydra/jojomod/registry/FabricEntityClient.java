@@ -145,15 +145,18 @@ public class FabricEntityClient {
         EntityRendererRegistry.register(FabricEntities.GENTLY_WEEPS, GentlyWeepsRenderer::new);
         EntityRendererRegistry.register(FabricEntities.STAND_ARROW, StandArrowRenderer::new);
         EntityRendererRegistry.register(FabricEntities.BOMB_PLANTED_ARROW, BombPlantedArrowRenderer::new);
+        EntityRendererRegistry.register(FabricEntities.BOMB_PLANTED_ENDERPEARL, ThrownItemRenderer::new);
         EntityRendererRegistry.register(FabricEntities.BOMB_PLANTED_SPECTRAL_ARROW, BombPlantedArrowRenderer::new);
         EntityRendererRegistry.register(FabricEntities.IRON_BALL, IronBallRenderer::new);
         EntityRendererRegistry.register(FabricEntities.THROWN_OBJECT, ThrownObjectRenderer::new);
+        EntityRendererRegistry.register(FabricEntities.RETURNING_OBJECT, ReturningObjectRenderer::new);
         EntityRendererRegistry.register(FabricEntities.THROWN_ANUBIS, ThrownAnubisRenderer::new);
         EntityRendererRegistry.register(FabricEntities.CONCEALED_FLAME_OBJECT, ConcealedFlameObjectRenderer::new);
         EntityRendererRegistry.register(FabricEntities.CINDERELLA_VISAGE_DISPLAY, CinderellaVisageDisplayRenderer::new);
         EntityRendererRegistry.register(FabricEntities.GROUND_HURRICANE, NoRenderer::new);
         EntityRendererRegistry.register(FabricEntities.GROUND_BUBBLE, NoRenderer::new);
         EntityRendererRegistry.register(FabricEntities.ANUBIS_POSSESSOR, NoRenderer::new);
+        EntityRendererRegistry.register(FabricEntities.COMMAND_DISC_POSSESSION, NoRenderer::new);
         EntityRendererRegistry.register(FabricEntities.MOLD_SPORE, NoRenderer::new);
         EntityRendererRegistry.register(FabricEntities.PURPLE_SMOKE, NoRenderer::new);
         EntityRendererRegistry.register(FabricEntities.ANUBIS_SLIPSTREAM, NoRenderer::new);
@@ -372,6 +375,7 @@ public class FabricEntityClient {
         ModStrayModels.killerQueenArmsPart = new KillerQueenArmsPart();
         ModStrayModels.theWorldArmsPart = new TheWorldArmsPart();
         ModStrayModels.starPlatinumArmsPart = new StarPlatinumArmsPart();
+        ModStrayModels.silverChariotArmsPart = new SilverChariotArmsPart();
         ModStrayModels.ChestPart = new ChestPart();
         ModStrayModels.SmallChestPart = new SmallChestPart();
         ModStrayModels.bodySpikePart = new BodySpikePart();
