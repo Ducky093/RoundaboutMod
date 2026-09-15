@@ -125,21 +125,18 @@ public class PowersTattooYou extends NewDashPreset {
         }
     }
 
-public boolean summonCloneClient() {
+public void summonCloneClient() {
             ServerLevel level,
             Player original,
             Vec3 spawnPos,
             byte worldId
-    ) {
+     {
         Entity copyEntity = ModEntities.TATTOO_YOU_CLONE.create(this.getSelf().level());
 
         if (!(copyEntity instanceof TattooYouCloneEntity copy)) {
             return false;
         }
 
-        // -------------------------------------------------
-        // UNIVERSAL STUFF YOU ACTUALLY WANT TO PRESERVE
-        // -------------------------------------------------
 
         // Name
         if (original.hasCustomName()) {
@@ -167,10 +164,10 @@ public boolean summonCloneClient() {
             
         }
     }
-    public boolean commandCloneClient() {
+    public void commandCloneClient() {
     
      }
-    public boolean swapWithCloneClient() {
+    public void swapWithCloneClient() {
         
     }
   
