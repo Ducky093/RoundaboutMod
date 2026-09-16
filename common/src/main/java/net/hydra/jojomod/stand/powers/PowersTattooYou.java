@@ -18,6 +18,7 @@ import net.hydra.jojomod.sound.ModSounds;
 import net.hydra.jojomod.stand.powers.elements.PowerContext;
 import net.hydra.jojomod.stand.powers.presets.NewDashPreset;
 import net.hydra.jojomod.util.MainUtil;
+import net.hydra.jojomod.entity.visages.CloneEntity;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Options;
 import net.minecraft.client.gui.GuiGraphics;
@@ -36,6 +37,9 @@ import net.minecraft.world.item.SplashPotionItem;
 import net.minecraft.world.item.alchemy.PotionUtils;
 import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.phys.AABB;
+
+
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -128,8 +132,7 @@ public class PowersTattooYou extends NewDashPreset {
 public void summonCloneClient() {
             ServerLevel level,
             Player original,
-            Vec3 spawnPos,
-            byte worldId
+            Vec3 spawnPos
      {
         Entity copyEntity = ModEntities.TATTOO_YOU_CLONE.create(this.getSelf().level());
 
@@ -165,7 +168,8 @@ public void summonCloneClient() {
         }
     }
     public void commandCloneClient() {
-    
+                ClientUtil.setTattooYouTacticsScreen();
+            return;
      }
     public void swapWithCloneClient() {
         
