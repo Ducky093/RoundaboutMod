@@ -6,9 +6,7 @@ import net.hydra.jojomod.client.ClientNetworking;
 import net.hydra.jojomod.client.StandIcons;
 import net.hydra.jojomod.entity.ModEntities;
 import net.hydra.jojomod.entity.projectile.ThrownWaterBottleEntity;
-import net.hydra.jojomod.entity.stand.JusticeEntity;
 import net.hydra.jojomod.entity.stand.StandEntity;
-import net.hydra.jojomod.entity.stand.SurvivorEntity;
 import net.hydra.jojomod.event.AbilityIconInstance;
 import net.hydra.jojomod.event.index.PowerIndex;
 import net.hydra.jojomod.event.index.PowerTypes;
@@ -101,13 +99,6 @@ public class PowersTattooYou extends NewDashPreset {
         return $$1;
     }
 
-    @Override
-
-
-
-
-
-
 
 
 
@@ -120,7 +111,7 @@ public class PowersTattooYou extends NewDashPreset {
                 summonCloneClient();
             }
             case SKILL_1_CROUCH-> {
-              commandCloneClient();
+              callAllClonesBackClient();
             )
             case SKILL_2_NORMAL, SKILL_2_CROUCH -> {
                 swapWithCloneClient();
@@ -129,13 +120,56 @@ public class PowersTattooYou extends NewDashPreset {
                 dash();
             }
             case SKILL_4_NORMAL, SKILL_4_CROUCH -> {
-                callAllClonesBackClient();
+                commandCloneClient();
             }
         }
     }
 
+public void summonCloneClient() {
+            ServerLevel level,
+            Player original,
+            Vec3 spawnPos,
+            byte worldId
+     {
+        Entity copyEntity = ModEntities.TATTOO_YOU_CLONE.create(this.getSelf().level());
 
-   
+        if (!(copyEntity instanceof TattooYouCloneEntity copy)) {
+            return false;
+        }
+
+
+        // Name
+        if (original.hasCustomName()) {
+            copy.setCustomName(original.getCustomName());
+            copy.setCustomNameVisible(original.isCustomNameVisible());
+        }
+
+
+        if (original.getUUID().equals(self.getUUID())){
+            copy.safeCopy = true;
+        }
+        copy.setPlayer(original);
+        ((IMob)copy).roundabout$setFate(((IPlayerEntity)original).roundabout$getFate());
+        copy.setItemSlot(EquipmentSlot.HEAD, original.getItemBySlot(EquipmentSlot.HEAD).copy());
+        copy.setItemSlot(EquipmentSlot.CHEST, original.getItemBySlot(EquipmentSlot.CHEST).copy());
+        copy.setItemSlot(EquipmentSlot.LEGS, original.getItemBySlot(EquipmentSlot.LEGS).copy());
+        copy.setItemSlot(EquipmentSlot.FEET, original.getItemBySlot(EquipmentSlot.FEET).copy());
+        copy.setItemSlot(EquipmentSlot.MAINHAND, original.getMainHandItem().copy());
+        copy.setItemSlot(EquipmentSlot.OFFHAND, original.getOffhandItem().copy());
+        for (EquipmentSlot slot : EquipmentSlot.values()) {
+            copy.setDropChance(slot, 0.0F);
+        }
+
+
+            
+        }
+    }
+    public void commandCloneClient() {
+    
+     }
+    public void swapWithCloneClient() {
+        
+    }
   
     @Override
     public int getDisplayPowerInventoryScale(){

@@ -86,7 +86,7 @@ public class DiverDownWorkbenchSelect extends Screen implements NoCancelInputScr
     }
     @Override
     public boolean keyReleased(int $$0, int $$1, int $$2) {
-        if (this.minecraft != null && !roundabout$sameKeyOne(KeyInputRegistry.abilityOneKey)) {
+        if (this.minecraft != null && !roundabout$sameKeyOne(KeyInputRegistry.abilityFourKey)) {
             this.selectHoveredWorkbench();
             this.minecraft.setScreen(null);
             if (this.minecraft.player != null){
@@ -247,14 +247,6 @@ public class DiverDownWorkbenchSelect extends Screen implements NoCancelInputScr
         );
     }
     private boolean checkToClose() {
-        if (minecraft != null) {
-            if (sameKeyOneX(KeyInputRegistry.abilityTwoKey, this.minecraft.options)) {
-                this.selectHoveredWorkbench();
-                this.minecraft.setScreen(null);
-                return true;
-            }
-        }
-        Options options = Minecraft.getInstance().options;
         return false;
     }
 
@@ -297,7 +289,7 @@ public class DiverDownWorkbenchSelect extends Screen implements NoCancelInputScr
         CRAFTING_TABLE_ID(Component.translatable("roundabout.diver_workbench.crafting"), new ResourceLocation(Roundabout.MOD_ID,
             "textures/gui/diver_down/workbench_icons/crafting_table.png"),CRAFTING_TABLE,0,-11, Component.translatable("roundabout.diver_workbench.crafting.desc")),
         LOOM_ID(Component.translatable("roundabout.diver_workbench.loom"), new ResourceLocation(Roundabout.MOD_ID,
-            "textures/gui/diver_down/workbench_icons/loom.png"),LOOM,40,18, Component.translatable("roundabout.diver_workbench.anvil.desc")),
+            "textures/gui/diver_down/workbench_icons/loom.png"),LOOM,40,18, Component.translatable("roundabout.diver_workbench.loom.desc")),
         STONECUTTER_ID(Component.translatable("roundabout.diver_workbench.stonecutter"), new ResourceLocation(Roundabout.MOD_ID,
             "textures/gui/diver_down/workbench_icons/stonecutter.png"),STONECUTTER,25,65, Component.translatable("roundabout.diver_workbench.stonecutter.desc")),
         ANVIL_ID(Component.translatable("roundabout.diver_workbench.anvil"), new ResourceLocation(Roundabout.MOD_ID,
