@@ -135,6 +135,7 @@ public void summonCloneClient() {
             ServerLevel level;
             Player original;
             Vec3 spawnPos;
+            byte worldId;
      {
         Entity copyEntity = ModEntities.TATTOO_YOU_CLONE.create(this.getSelf().level());
 
