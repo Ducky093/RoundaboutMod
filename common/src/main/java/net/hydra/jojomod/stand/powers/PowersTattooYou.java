@@ -54,7 +54,7 @@ public class PowersTattooYou extends NewDashPreset {
     @Override
     /**Override to add disable config*/
     public boolean isStandEnabled(){
-        return ClientNetworking.getAppropriateConfig().survivorSettings.enableSurvivor;
+        return ClientNetworking.getAppropriateConfig().tattooYouSettings.enableTattooYou;
     }
     @Override
     public StandPowers generateStandPowers(LivingEntity entity) {
