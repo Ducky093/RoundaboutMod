@@ -38,6 +38,8 @@ import net.minecraft.world.item.alchemy.PotionUtils;
 import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.AABB;
+import net.minecraft.entity.EquipmentSlot;
+import net.hydra.jojomod.client.ClientUtil;
 
 
 
@@ -188,16 +190,6 @@ public void summonCloneClient() {
     }
     protected Byte getSummonSound() {
         return SoundIndex.SUMMON_SOUND;
-    }
-
-
- 
-    public boolean isAttackIneptVisually(byte activeP, int slot) {
-        if (slot == 1 && !canUseWaterBottleThrow()){
-            return true;
-        }
-
-        return super.isAttackIneptVisually(activeP,slot);
     }
 
     public static final byte
