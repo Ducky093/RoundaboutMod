@@ -116,7 +116,7 @@ public class PowersTattooYou extends NewDashPreset {
             }
             case SKILL_1_CROUCH-> {
               callAllClonesBackClient();
-            )
+            }
             case SKILL_2_NORMAL, SKILL_2_CROUCH -> {
                 swapWithCloneClient();
             }
@@ -246,4 +246,4 @@ public void summonCloneClient() {
             holdAttack = false;
         }
     }
-}
+
