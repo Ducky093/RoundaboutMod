@@ -419,7 +419,8 @@ public class AbilityScapeBasis {
             GUARD = 32,
             VAULT = 33,
             MINING = 34,
-            MELT_DODGE_ANIM = 35;
+            MELT_DODGE_ANIM = 35,
+            SWITCH_INTO_BODY = 36;
 
     public float guardMod(){
         return 0.2f;
@@ -532,6 +533,8 @@ public class AbilityScapeBasis {
         return this.attackTimeDuring;
     }
     public void onEnderPearlThrow(){
+    }
+    public void onEnderPearlLand(){
     }
     public byte getActivePower(){
         return this.activePower;
@@ -2583,6 +2586,7 @@ public class AbilityScapeBasis {
             distMax = this.getDistanceOut(User, distMax, false);
             distMax = Math.min(this.getDistanceOut(User, distMax, false),distMax);
         }
+
         Entity targetEntity = this.rayCastEntity(User,distMax);
 
         if ((targetEntity != null && User instanceof StandEntity SE && SE.getUser() != null && SE.getUser().is(targetEntity))

@@ -40,6 +40,7 @@ import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.PathfinderMob;
@@ -93,8 +94,10 @@ public abstract class ZLivingEntityRenderer<T extends LivingEntity, M extends En
     @Inject(method = "render(Lnet/minecraft/world/entity/LivingEntity;FFLcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;I)V", at = @At(value = "HEAD"))
     private void roundabout$applyInvisibilityFade(T entity, float entityYaw, float partialTicks, PoseStack poseStack, MultiBufferSource buffer, int packedLight, CallbackInfo ci) {
 
-        if (((StandUser)entity).roundabout$getStandAnimation() == StandPowers.MELT_DODGE_ANIM
-        && !((TimeStop) entity.level()).CanTimeStopEntity(entity)){
+        byte sam = ((StandUser)entity).roundabout$getStandAnimation();
+        boolean stopTime = ((TimeStop) entity.level()).CanTimeStopEntity(entity);
+        if (sam == StandPowers.MELT_DODGE_ANIM
+        && !stopTime){
             float animTime = entity.tickCount + partialTicks;
 
             float xDistortion = Mth.sin(animTime * 0.31F) * 0.045F;
@@ -106,6 +109,17 @@ public abstract class ZLivingEntityRenderer<T extends LivingEntity, M extends En
                     1.0F + yDistortion,
                     1.0F + zDistortion
             );
+        } else if (sam == StandPowers.SWITCH_INTO_BODY
+                && !stopTime){
+            if (((StandUser)entity).roundabout$getStandPowers() instanceof PowersD4C pd4c){
+                float ticksSince = ((pd4c.ticksSinceSwitch+ partialTicks)*0.1F)+0.01F;
+                ticksSince = Math.min(ticksSince,1F);
+                poseStack.scale(
+                        ticksSince,
+                        ticksSince,
+                        ticksSince
+                );
+            }
         }
 
 
@@ -372,12 +386,18 @@ public abstract class ZLivingEntityRenderer<T extends LivingEntity, M extends En
     // diver down disguise
     @Inject(method = "render(Lnet/minecraft/world/entity/LivingEntity;FFLcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;I)V", at = @At("HEAD"), cancellable = true)
     private void roundabout$renderDiverDownDisguise(T entity, float entityYaw, float partialTicks, PoseStack poseStack, MultiBufferSource buffer, int packedLight, CallbackInfo ci) {
+        if ((Object) this instanceof AbstractDisguiseRenderer) {
+            return;
+        }
+
         StandUser su = (StandUser) entity;
         if (su.roundabout$isDisguised()) {
             GameProfile profile = su.roundabout$getDisguiseProfile();
             if (profile != null) {
                 //disguises with skin
-                DiverDownDisguiseRenderer.render(entity, profile, entityYaw, partialTicks, poseStack, buffer, packedLight);
+                if (DiverDownDisguiseRenderer.INSTANCE != null) {
+                    DiverDownDisguiseRenderer.INSTANCE.renderDisguise(entity, profile, entityYaw, partialTicks, poseStack, buffer, packedLight);
+                }
                 //adds the nametag
                 if (entity != Minecraft.getInstance().player && !entity.isInvisible()) {
                     String disguiseName = profile.getName();
