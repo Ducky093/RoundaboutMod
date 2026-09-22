@@ -18,6 +18,7 @@ import net.hydra.jojomod.sound.ModSounds;
 import net.hydra.jojomod.stand.powers.elements.PowerContext;
 import net.hydra.jojomod.stand.powers.presets.NewDashPreset;
 import net.hydra.jojomod.util.MainUtil;
+import net.hydra.jojomod.entity.visages.CloneEntity;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Options;
 import net.minecraft.client.gui.GuiGraphics;
@@ -36,6 +37,11 @@ import net.minecraft.world.item.SplashPotionItem;
 import net.minecraft.world.item.alchemy.PotionUtils;
 import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.entity.EquipmentSlot;
+import net.hydra.jojomod.client.ClientUtil;
+
+
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -112,7 +118,7 @@ public class PowersTattooYou extends NewDashPreset {
             }
             case SKILL_1_CROUCH-> {
               callAllClonesBackClient();
-            )
+            }
             case SKILL_2_NORMAL, SKILL_2_CROUCH -> {
                 swapWithCloneClient();
             }
@@ -126,10 +132,9 @@ public class PowersTattooYou extends NewDashPreset {
     }
 
 public void summonCloneClient() {
-            ServerLevel level,
-            Player original,
-            Vec3 spawnPos,
-            byte worldId
+            ServerLevel level;
+            Player original;
+            Vec3 spawnPos;
      {
         Entity copyEntity = ModEntities.TATTOO_YOU_CLONE.create(this.getSelf().level());
 
@@ -158,14 +163,12 @@ public void summonCloneClient() {
         copy.setItemSlot(EquipmentSlot.OFFHAND, original.getOffhandItem().copy());
         for (EquipmentSlot slot : EquipmentSlot.values()) {
             copy.setDropChance(slot, 0.0F);
+            }    
         }
-
-
-            
-        }
-    }
+}
     public void commandCloneClient() {
-    
+                ClientUtil.setTattooYouTacticsScreen();
+            return;
      }
     public void swapWithCloneClient() {
         
@@ -187,16 +190,6 @@ public void summonCloneClient() {
     }
     protected Byte getSummonSound() {
         return SoundIndex.SUMMON_SOUND;
-    }
-
-
- 
-    public boolean isAttackIneptVisually(byte activeP, int slot) {
-        if (slot == 1 && !canUseWaterBottleThrow()){
-            return true;
-        }
-
-        return super.isAttackIneptVisually(activeP,slot);
     }
 
     public static final byte
@@ -229,7 +222,7 @@ public void summonCloneClient() {
     public Component ifWipListDev(){
         return Component.literal(  "A Duck").withStyle(ChatFormatting.GOLD);
     }
-}
+
 
 
     boolean holdAttack = false;
@@ -243,3 +236,4 @@ public void summonCloneClient() {
         }
     }
 }
+

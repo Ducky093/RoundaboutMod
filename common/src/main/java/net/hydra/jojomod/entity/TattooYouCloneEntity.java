@@ -32,7 +32,7 @@ public class TattooYouCloneEntity extends CloneEntity {
 
     public boolean safeCopy = false;
     public int timer = 0;
-    public D4CCloneEntity(EntityType<? extends PathfinderMob> $$0, Level $$1) {
+    public TattooYouCloneEntity(EntityType<? extends PathfinderMob> $$0, Level $$1) {
         super($$0, $$1);
         this.goalSelector.addGoal(1, new OpenDoorGoal(this, true));
         this.goalSelector.addGoal(3, new FloatGoal(this));

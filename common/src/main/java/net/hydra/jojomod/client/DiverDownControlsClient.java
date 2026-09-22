@@ -10,6 +10,7 @@ public final class DiverDownControlsClient {
     private static CameraType previousCameraType = null;
     private static boolean cameraActive = false;
     private static boolean isChestScreenCurrentlyOpen = false;
+    private static boolean chestScreenWasOpen = false;
 
     private DiverDownControlsClient() {
     }
@@ -22,8 +23,6 @@ public final class DiverDownControlsClient {
         if (previousCameraType == null) {
             previousCameraType = mc.options.getCameraType();
         }
-
-        mc.options.setCameraType(CameraType.THIRD_PERSON_BACK);
 
         if (mc.player != null && mc.getCameraEntity() != mc.player) {
             mc.setCameraEntity(mc.player);
@@ -42,7 +41,6 @@ public final class DiverDownControlsClient {
             mc.setCameraEntity(mc.player);
         }
 
-        restoreCameraType(mc);
         cameraActive = false;
         isChestScreenCurrentlyOpen = false;
     }
@@ -50,18 +48,6 @@ public final class DiverDownControlsClient {
     // failsafe just in case
     public static void clear() {
         exit();
-    }
-
-    // keep camera in third person while diving
-    public static void enforceCamera(Entity stand) {
-        if (stand == null) return;
-        Minecraft mc = Minecraft.getInstance();
-
-        ClientUtil.synchToCamera(stand);
-
-        if (mc.options.getCameraType() != CameraType.THIRD_PERSON_BACK) {
-            mc.options.setCameraType(CameraType.THIRD_PERSON_BACK);
-        }
     }
 
     // checks for containers that are currently open
@@ -72,9 +58,9 @@ public final class DiverDownControlsClient {
     // plays the chest/barrel closing sound
     public static void handleChestAudio(boolean isBarrel) {
         Minecraft mc = Minecraft.getInstance();
-        boolean hasScreenNow = mc.screen != null;
+        boolean isContainerOpen = mc.screen instanceof net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 
-        if (hasScreenNow) {
+        if (isContainerOpen) {
             isChestScreenCurrentlyOpen = true;
         } else if (isChestScreenCurrentlyOpen) {
             isChestScreenCurrentlyOpen = false;
@@ -85,9 +71,21 @@ public final class DiverDownControlsClient {
         }
     }
 
-    private static void restoreCameraType(Minecraft mc) {
-        CameraType restore = (previousCameraType != null) ? previousCameraType : CameraType.FIRST_PERSON;
-        mc.options.setCameraType(restore);
-        previousCameraType = null;
+    public static boolean isDiving() {
+        return cameraActive;
+    }
+
+    public static boolean wasChestScreenClosed() {
+        Minecraft mc = Minecraft.getInstance();
+        boolean hasContainer = mc.screen instanceof net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
+        if (hasContainer) {
+            chestScreenWasOpen = true;
+            return false;
+        }
+        if (chestScreenWasOpen) {
+            chestScreenWasOpen = false;
+            return true; // Just closed!
+        }
+        return false;
     }
 }

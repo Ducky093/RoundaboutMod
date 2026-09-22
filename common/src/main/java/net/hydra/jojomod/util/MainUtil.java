@@ -3802,7 +3802,20 @@ public class MainUtil {
 
         return 5;
     }
-
+    public static boolean getIsGamemodeApproriateForObtainment(Entity Li) {
+        if (Li != null && !Li.level().isClientSide()) {
+            if ((!(Li instanceof Player) || (((ServerPlayer) Li).gameMode.getGameModeForPlayer() != GameType.SPECTATOR
+                    && ((ServerPlayer) Li).gameMode.getGameModeForPlayer() != GameType.ADVENTURE))
+                    && Li.level().getGameRules().getBoolean(ModGamerules.ROUNDABOUT_STAND_GRIEFING)
+                    && Li.level().getGameRules().getBoolean(ModGamerules.ROUNDABOUT_STAND_GRIEFING_OBTAINMENT)) {
+                if (PowerTypes.isExistentiallyElsewhere(Li) && !PowerTypes.canInteractInExistence(Li)) {
+                    return false;
+                }
+                return true;
+            }
+        }
+        return false;
+    }
     public static boolean getIsGamemodeApproriateForGrief(Entity Li) {
         if (Li != null && !Li.level().isClientSide()) {
             if ((!(Li instanceof Player) || (((ServerPlayer) Li).gameMode.getGameModeForPlayer() != GameType.SPECTATOR
@@ -4019,6 +4032,14 @@ public class MainUtil {
                 pw.toggleSpikes(true);
                 pw.setHeelDirection(cd);
                 pw.justFlippedTicks = 7;
+            } else if (powers instanceof PowersDiverDown pdd) {
+                if (!player.level().isClientSide()) {
+                    player.level().playSound(null, player.blockPosition(), ModSounds.WALL_LATCH_EVENT,
+                            SoundSource.PLAYERS, 1F, 1f);
+                }
+                pdd.toggleZip(true);
+                pdd.setHeelDirection(cd);
+                pdd.justFlippedTicks = 10;
             }
             ((IGravityEntity) player).roundabout$setGravityDirection(cd);
         } else if (context == PacketDataIndex.INT_GRAVITY_FLIP_3) {
@@ -4292,17 +4313,16 @@ public class MainUtil {
     }
 
     public static Entity pick(Entity self, double distance) {
-        double $$2 = distance;
         float choose = 1;
         if (self.level().isClientSide()) {
             choose = ClientUtil.getFrameTime() % 1;
         }
-        HitResult pick = self.pick($$2, choose, false);
+        HitResult pick = self.pick(distance, choose, false);
         Vec3 $$3 = self.getEyePosition(choose);
         boolean $$4 = false;
         int $$5 = 3;
-        double $$6 = $$2;
-        if ($$2 > 3.0) {
+        double $$6 = distance;
+        if (distance > 3.0) {
             $$4 = true;
         }
 
@@ -4312,8 +4332,8 @@ public class MainUtil {
         }
 
         Vec3 $$7 = self.getViewVector(1.0F);
-        Vec3 $$8 = $$3.add($$7.x * $$2, $$7.y * $$2, $$7.z * $$2);
-        AABB $$10 = self.getBoundingBox().expandTowards($$7.scale($$2)).inflate(1.0, 1.0, 1.0);
+        Vec3 $$8 = $$3.add($$7.x * distance, $$7.y * distance, $$7.z * distance);
+        AABB $$10 = self.getBoundingBox().expandTowards($$7.scale(distance)).inflate(1.0, 1.0, 1.0);
         EntityHitResult $$11 = ProjectileUtil.getEntityHitResult(self, $$3, $$8, $$10,
                 $$0x -> !$$0x.isSpectator() && MainUtil.isStandPickable($$0x) && !$$0x.isInvulnerable()
                         && !$$0x.hasPassenger(self),
@@ -4322,7 +4342,7 @@ public class MainUtil {
             Entity $$12 = $$11.getEntity();
             Vec3 $$13 = $$11.getLocation();
             double $$14 = $$3.distanceToSqr($$13);
-            if ($$4 && $$14 > 9.0) {
+            if ($$4 && $$14 > distance*distance) {
                 pick = BlockHitResult.miss($$13, Direction.getNearest($$7.x, $$7.y, $$7.z), BlockPos.containing($$13));
             } else if ($$14 < $$6 || pick == null) {
                 return $$12;
