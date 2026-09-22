@@ -165,7 +165,7 @@ public void summonCloneClient() {
         }
 }
     public void commandCloneClient() {
-                ClientUtil.setTattooYouTacticsScreen()
+                ClientUtil.setTattooYouTacticsScreen();
             return;
      }
     public void swapWithCloneClient() {
