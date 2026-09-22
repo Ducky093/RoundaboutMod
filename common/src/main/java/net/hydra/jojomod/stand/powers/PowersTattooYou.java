@@ -130,9 +130,9 @@ public class PowersTattooYou extends NewDashPreset {
     }
 
 public void summonCloneClient() {
-            ServerLevel level,
-            Player original,
-            Vec3 spawnPos
+            ServerLevel level;
+            Player original;
+            Vec3 spawnPos;
      {
         Entity copyEntity = ModEntities.TATTOO_YOU_CLONE.create(this.getSelf().level());
 
