@@ -161,14 +161,11 @@ public void summonCloneClient() {
         copy.setItemSlot(EquipmentSlot.OFFHAND, original.getOffhandItem().copy());
         for (EquipmentSlot slot : EquipmentSlot.values()) {
             copy.setDropChance(slot, 0.0F);
+            }    
         }
-
-
-            
-        }
-    
+}
     public void commandCloneClient() {
-                ClientUtil.setTattooYouTacticsScreen();
+                ClientUtil.setTattooYouTacticsScreen()
             return;
      }
     public void swapWithCloneClient() {
@@ -246,5 +243,5 @@ public void summonCloneClient() {
             holdAttack = false;
         }
     }
-
 }
+
