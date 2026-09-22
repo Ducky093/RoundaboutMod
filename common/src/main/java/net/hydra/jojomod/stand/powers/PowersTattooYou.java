@@ -166,7 +166,7 @@ public void summonCloneClient() {
 
             
         }
-    }
+    
     public void commandCloneClient() {
                 ClientUtil.setTattooYouTacticsScreen();
             return;
@@ -233,7 +233,7 @@ public void summonCloneClient() {
     public Component ifWipListDev(){
         return Component.literal(  "A Duck").withStyle(ChatFormatting.GOLD);
     }
-}
+
 
 
     boolean holdAttack = false;
@@ -247,3 +247,4 @@ public void summonCloneClient() {
         }
     }
 
+}
