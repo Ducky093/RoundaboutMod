@@ -1880,6 +1880,10 @@ public class ClientUtil {
         isInCinderellaMobUI = entid;
         mc.setScreen(new VisageStoreScreen(costs));
     }
+    public static void setTattooYouTacticsScreen() {
+        Minecraft mc = Minecraft.getInstance();
+        mc.setScreen(new TattooYouTacticsScreen());
+    }
     public static void setZombieMinionScreen(int entid) {
         Minecraft mc = Minecraft.getInstance();
         mc.setScreen(new ZombieMinionScreen(entid));
