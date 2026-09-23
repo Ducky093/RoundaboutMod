@@ -87,7 +87,7 @@ public class TattooYouCloneEntity extends CloneEntity {
             safeCopy = tag.getBoolean("safeCopy");
         }
     }
-
+   @Override
     private boolean isValidTarget(LivingEntity entity) {
         if (entity == null || entity == this) {
             return false;

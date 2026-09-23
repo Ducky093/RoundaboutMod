@@ -40,6 +40,8 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.entity.EquipmentSlot;
 import net.hydra.jojomod.client.ClientUtil;
+import net.hydra.jojomod.entity.visages.CloneEntity;
+import net.hydra.jojomod.entity.TattooYouCloneEntity;
 
 
 
@@ -50,6 +52,18 @@ import java.util.List;
 public class PowersTattooYou extends NewDashPreset {
     public PowersTattooYou(LivingEntity self) {
         super(self);
+    }
+        @Override
+    public int getDisplayPowerInventoryScale(){
+        return 60;
+    }
+    @Override
+    public int getDisplayPowerInventoryYOffset(){
+        return 7;
+    }
+    @Override
+    public boolean isSecondaryStand(){
+        return false;
     }
     @Override
     /**Override to add disable config*/
@@ -77,13 +91,9 @@ public class PowersTattooYou extends NewDashPreset {
             setSkillIcon(context, x, y, 2, StandIcons.SPAWN, PowerIndex.SKILL_2);
         setSkillIcon(context, x, y, 3, StandIcons.DODGE, PowerIndex.GLOBAL_DASH);
 
-        if (getCreative() || !ClientNetworking.getAppropriateConfig().survivorSettings.canonSurvivorHasNoRageCupid) {
-            if (angerSelectionMode())
-                setSkillIcon(context, x, y, 4, StandIcons.CUPID_ON, PowerIndex.SKILL_4);
-            else
-                setSkillIcon(context, x, y, 4, StandIcons.RAGE_SELECTION, PowerIndex.SKILL_4);
-        }
 
+                setSkillIcon(context, x, y, 4, StandIcons.CUPID_ON, PowerIndex.SKILL_4);
+                setSkillIcon(context, x, y, 4, StandIcons.RAGE_SELECTION, PowerIndex.SKILL_4);
         super.renderIcons(context, x, y);
     }
 
@@ -117,7 +127,7 @@ public class PowersTattooYou extends NewDashPreset {
                 summonCloneClient();
             }
             case SKILL_1_CROUCH-> {
-              callAllClonesBackClient();
+              desummonCloneClient();
             }
             case SKILL_2_NORMAL, SKILL_2_CROUCH -> {
                 swapWithCloneClient();
@@ -174,25 +184,9 @@ public void summonCloneClient() {
     public void swapWithCloneClient() {
         
     }
+    public void desummonCloneClient() {
+    }
   
-    @Override
-    public int getDisplayPowerInventoryScale(){
-        return 60;
-    }
-    @Override
-    public int getDisplayPowerInventoryYOffset(){
-        return 7;
-    }
- 
-
-    @Override
-    public boolean isSecondaryStand(){
-        return false;
-    }
-    protected Byte getSummonSound() {
-        return SoundIndex.SUMMON_SOUND;
-    }
-
     public static final byte
             PLACE = 71,
             RETRACT = 72,
