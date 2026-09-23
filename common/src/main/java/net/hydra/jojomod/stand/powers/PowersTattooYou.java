@@ -40,6 +40,8 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.entity.EquipmentSlot;
 import net.hydra.jojomod.client.ClientUtil;
+import net.hydra.jojomod.entity.visages.CloneEntity;
+import net.hydra.jojomod.entity.TattooYouCloneEntity;
 
 
 
@@ -77,10 +79,8 @@ public class PowersTattooYou extends NewDashPreset {
             setSkillIcon(context, x, y, 2, StandIcons.SPAWN, PowerIndex.SKILL_2);
         setSkillIcon(context, x, y, 3, StandIcons.DODGE, PowerIndex.GLOBAL_DASH);
 
-        if (getCreative() || !ClientNetworking.getAppropriateConfig().survivorSettings.canonSurvivorHasNoRageCupid) {
-            if (angerSelectionMode())
+
                 setSkillIcon(context, x, y, 4, StandIcons.CUPID_ON, PowerIndex.SKILL_4);
-            else
                 setSkillIcon(context, x, y, 4, StandIcons.RAGE_SELECTION, PowerIndex.SKILL_4);
         }
 
@@ -117,7 +117,7 @@ public class PowersTattooYou extends NewDashPreset {
                 summonCloneClient();
             }
             case SKILL_1_CROUCH-> {
-              callAllClonesBackClient();
+              desummonCloneClient();
             }
             case SKILL_2_NORMAL, SKILL_2_CROUCH -> {
                 swapWithCloneClient();
@@ -173,6 +173,8 @@ public void summonCloneClient() {
     public void swapWithCloneClient() {
         
     }
+    public void desummonCloneClient() {
+        )
   
     @Override
     public int getDisplayPowerInventoryScale(){
