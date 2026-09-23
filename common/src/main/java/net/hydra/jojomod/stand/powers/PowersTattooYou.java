@@ -184,12 +184,8 @@ public void summonCloneClient() {
         
     }
     public void desummonCloneClient() {
-        )
-  
-    protected Byte getSummonSound() {
-        return SoundIndex.SUMMON_SOUND;
     }
-
+  
     public static final byte
             PLACE = 71,
             RETRACT = 72,
