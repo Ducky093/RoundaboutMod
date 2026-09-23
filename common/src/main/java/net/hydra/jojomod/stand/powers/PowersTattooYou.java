@@ -82,8 +82,6 @@ public class PowersTattooYou extends NewDashPreset {
 
                 setSkillIcon(context, x, y, 4, StandIcons.CUPID_ON, PowerIndex.SKILL_4);
                 setSkillIcon(context, x, y, 4, StandIcons.RAGE_SELECTION, PowerIndex.SKILL_4);
-        }
-
         super.renderIcons(context, x, y);
     }
 
