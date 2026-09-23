@@ -53,6 +53,18 @@ public class PowersTattooYou extends NewDashPreset {
     public PowersTattooYou(LivingEntity self) {
         super(self);
     }
+        @Override
+    public int getDisplayPowerInventoryScale(){
+        return 60;
+    }
+    @Override
+    public int getDisplayPowerInventoryYOffset(){
+        return 7;
+    }
+    @Override
+    public boolean isSecondaryStand(){
+        return false;
+    }
     @Override
     /**Override to add disable config*/
     public boolean isStandEnabled(){
@@ -174,20 +186,6 @@ public void summonCloneClient() {
     public void desummonCloneClient() {
         )
   
-    @Override
-    public int getDisplayPowerInventoryScale(){
-        return 60;
-    }
-    @Override
-    public int getDisplayPowerInventoryYOffset(){
-        return 7;
-    }
- 
-
-    @Override
-    public boolean isSecondaryStand(){
-        return false;
-    }
     protected Byte getSummonSound() {
         return SoundIndex.SUMMON_SOUND;
     }
